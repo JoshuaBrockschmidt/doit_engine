@@ -31,9 +31,15 @@ namespace DOIT {
 	}
 
 	void Engine::run() {
+		SDL_Event ev;
 		while(running) {
+			while (SDL_PollEvent(&ev)) {
+				if (ev.type == SDL_WINDOWEVENT &&
+				    ev.window.event == SDL_WINDOWEVENT_CLOSE)
+					if (ev.window.windowID == window.getID())
+						running = false;
+			}
 			window.render();
-			break; //TEMPORARY!
 		}
 	}
 

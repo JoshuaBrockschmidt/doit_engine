@@ -48,4 +48,8 @@ namespace DOIT {
 	std::string Window::getTitle() {
 		return title;
 	}
+
+	Uint32 Window::getID() {
+		return SDL_GetWindowID(win);
+	}
 }

@@ -52,6 +52,11 @@ public:
 	*/
 	std::string getTitle();
 
+	/**
+	   Returns SDL window ID.
+	*/
+	Uint32 getID();
+
 private:
         SDL_Window* win;
 	unsigned int width;

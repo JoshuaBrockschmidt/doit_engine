@@ -23,8 +23,6 @@ int main() {
 
 	engine->start();
 
-	SDL_Delay(1000);
-
 	delete engine;
 	DOIT::cleanUp();
 
