@@ -18,11 +18,13 @@ namespace DOIT {
 }
 
 #include "window.hpp"
+#include "game.hpp"
 
 namespace DOIT {
 	class Engine {
 	public:
 		Window window;
+		Game game;
 
 		Engine(unsigned int w, unsigned int h, std::string _title, double _frameCap);
 		~Engine();
@@ -34,6 +36,7 @@ namespace DOIT {
 		bool running;
 
 		void update();
+		void render();
 		void run();
 	};
 

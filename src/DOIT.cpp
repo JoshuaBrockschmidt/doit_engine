@@ -14,7 +14,7 @@ namespace DOIT {
 	}
 
 	Engine::Engine(unsigned int w, unsigned int h, std::string _title, double _frameCap):
-		window(w, h, _title) {
+		window(w, h, _title), game() {
 		frameCap = _frameCap;
 		running = false;
 	}
@@ -43,9 +43,19 @@ namespace DOIT {
 		while (SDL_PollEvent(&ev)) {
 			if (ev.type == SDL_WINDOWEVENT &&
 			    ev.window.event == SDL_WINDOWEVENT_CLOSE)
-				if (ev.window.windowID == window.getID())
+				if (ev.window.windowID == window.getID()) {
 					stop();
+					return;
+				}
 		}
+
+		game.input();
+		game.update();
+	}
+
+	void Engine::render() {
+		window.render();
+		game.render();
 	}
 
 	void Engine::run() {
@@ -77,7 +87,7 @@ namespace DOIT {
 					frameCnt = 0;
 				}
 
-				window.render();
+				render();
 				frames++;
 			}
 		}
