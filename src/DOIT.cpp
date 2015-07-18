@@ -1,3 +1,4 @@
+#include <iostream>
 #include "DOIT.hpp"
 
 bool wasInit = false;
@@ -12,8 +13,9 @@ namespace DOIT {
 		return msg.c_str();
 	}
 
-	Engine::Engine(unsigned int w, unsigned int h, std::string _title):
+	Engine::Engine(unsigned int w, unsigned int h, std::string _title, double _frameCap):
 		window(w, h, _title) {
+		frameCap = _frameCap;
 		running = false;
 	}
 
@@ -21,8 +23,6 @@ namespace DOIT {
 
 	void Engine::start() {
 		if (running) return;
-
-		running = true;
 		run();
 	}
 
@@ -30,16 +30,56 @@ namespace DOIT {
 		running = false;
 	}
 
-	void Engine::run() {
+	void Engine::setFrameCap(double newFrameCap) {
+		//TODO: Possibly throw an error.
+		if (newFrameCap <= 0)
+			return;
+
+		frameCap = newFrameCap;
+	}
+
+	void Engine::update() {
 		SDL_Event ev;
+		while (SDL_PollEvent(&ev)) {
+			if (ev.type == SDL_WINDOWEVENT &&
+			    ev.window.event == SDL_WINDOWEVENT_CLOSE)
+				if (ev.window.windowID == window.getID())
+					stop();
+		}
+	}
+
+	void Engine::run() {
+		running = true;
+
+		int frames = 0;
+		Uint32 frameCnt = 0;
+
+		const double frameTime = 1.0 / frameCap;
+		Uint32 startTime, passedTime, lastTime;
+		double unprocessedTime = 0;
+		lastTime = Time::getTime();
+
 		while(running) {
-			while (SDL_PollEvent(&ev)) {
-				if (ev.type == SDL_WINDOWEVENT &&
-				    ev.window.event == SDL_WINDOWEVENT_CLOSE)
-					if (ev.window.windowID == window.getID())
-						running = false;
+			startTime = Time::getTime();
+			passedTime = startTime - lastTime;
+			lastTime = startTime;
+			unprocessedTime += passedTime / (double)Time::second;
+			frameCnt += passedTime;
+
+			while (unprocessedTime > frameTime) {
+				unprocessedTime -= frameTime;
+
+				update();
+
+				if (frameCnt >= Time::second) {
+					std::cout << "FPS: " << frames << std::endl;
+					frames = 0;
+					frameCnt = 0;
+				}
+
+				window.render();
+				frames++;
 			}
-			window.render();
 		}
 	}
 

@@ -24,17 +24,23 @@ namespace DOIT {
 	public:
 		Window window;
 
-		Engine(unsigned int w, unsigned int h, std::string _title);
+		Engine(unsigned int w, unsigned int h, std::string _title, double _frameCap);
 		~Engine();
 		void start();
 		void stop();
-		void run();
+		void setFrameCap(double newFrameCap);
 	private:
+		double frameCap;
 		bool running;
+
+		void update();
+		void run();
 	};
 
 	void init();
 	void cleanUp();
 }
+
+#include "time.hpp"
 
 #endif //DOITENGINE_H
