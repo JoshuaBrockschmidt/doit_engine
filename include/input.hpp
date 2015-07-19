@@ -3,11 +3,12 @@
 
 #include <vector>
 #include <SDL2/SDL.h>
+#include "general.hpp"
 
 namespace DOIT {
 	class Input {
 	public:
-	        enum Keys: int {
+	        enum struct Keys: int {
 			UNKNOWN,
 			A,
 			B,
@@ -253,18 +254,33 @@ namespace DOIT {
 			NUM_ITEMS
 		};
 
+		enum struct Mouse: int {
+			LEFT,
+			MIDDLE,
+			RIGHT,
+			NUM_ITEMS
+		};
+
 		Input();
 		~Input();
 		void update();
-		bool getKeyDown(int key);
-		bool getKeyUp(int key);
-		bool getKey(int key);
+		bool getKeyDown(Keys k);
+		bool getKeyUp(Keys k);
+		bool getKey(Keys k);
+		bool getMouseDown(Mouse btn);
+		bool getMouseUp(Mouse btn);
+		bool getMouse(Mouse btn);
+		void getMouseXY(int& x, int& y);
 	private:
-		bool keysUp[Keys::NUM_ITEMS];
-		bool keysDown[Keys::NUM_ITEMS];
-	        bool keysActive[Keys::NUM_ITEMS];
+		bool keysUp[to_integral(Keys::NUM_ITEMS)];
+		bool keysDown[to_integral(Keys::NUM_ITEMS)];
+		bool keysActive[to_integral(Keys::NUM_ITEMS)];
+		bool mouseUp[to_integral(Mouse::NUM_ITEMS)];
+		bool mouseDown[to_integral(Mouse::NUM_ITEMS)];
+		bool mouseActive[to_integral(Mouse::NUM_ITEMS)];
+		int mouse_x, mouse_y;
 
-		int SDLtoKey(int SDLkey);
+		Keys SDLtoKey(int SDLkey);
 	};
 }
 

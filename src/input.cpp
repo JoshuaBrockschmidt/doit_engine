@@ -1,13 +1,21 @@
 #include <algorithm>
+#include <type_traits>
 #include "input.hpp"
 
 namespace DOIT {
 	Input::Input() {
-		for (int k=0; k<Keys::NUM_ITEMS; k++) {
+		for (int k=0; k<to_integral(Keys::NUM_ITEMS); k++) {
 			keysDown[k] = false;
 			keysUp[k] = false;
 			keysActive[k] = false;
 		}
+		for (int k=0; k<to_integral(Mouse::NUM_ITEMS); k++) {
+			mouseDown[k] = false;
+			mouseUp[k] = false;
+			mouseActive[k] = false;
+		}
+		mouse_x = 0;
+		mouse_y = 0;
 	}
 
 	Input::~Input() {}
@@ -17,7 +25,7 @@ namespace DOIT {
 		const Uint8* keystate = SDL_GetKeyboardState(&numkeys);
 		int kSDL, k;
 		for (kSDL=0; kSDL<numkeys; kSDL++) {
-			k = SDLtoKey(kSDL);
+			k = to_integral(SDLtoKey(kSDL));
 			if (keystate[kSDL]) {
 				if (!keysActive[k]) {
 					keysUp[k] = false;
@@ -36,21 +44,59 @@ namespace DOIT {
 				}
 			}
 		}
+
+		Uint32 mousestate = SDL_GetMouseState(&mouse_x, &mouse_y);
+	        for (k=0; k<to_integral(Mouse::NUM_ITEMS); k++) {
+			if (mousestate & SDL_BUTTON(k+1)) {
+				if (!mouseActive[k]) {
+					mouseUp[k] = false;
+					mouseDown[k] = true;
+					mouseActive[k] = true;
+				} else if (mouseDown[k]) {
+					mouseDown[k] = false;
+				}
+			} else {
+				if (mouseActive[k]) {
+					mouseDown[k] = false;
+					mouseActive[k] = false;
+					mouseUp[k] = true;
+				} else if (mouseUp[k]) {
+					mouseUp[k] = false;
+				}
+			}
+		}
 	}
 
-	bool Input::getKeyDown(int key) {
-		return keysDown[key];
+	bool Input::getKeyDown(Keys k) {
+		return keysDown[to_integral(k)];
 	}
 
-	bool Input::getKeyUp(int key) {
-		return keysUp[key];
+	bool Input::getKeyUp(Keys k) {
+		return keysUp[to_integral(k)];
 	}
 
-	bool Input::getKey(int key) {
-		return keysActive[key];
+	bool Input::getKey(Keys k) {
+		return keysActive[to_integral(k)];
 	}
 
-	int Input::SDLtoKey(int SDLkey) {
+	bool Input::getMouseDown(Mouse btn) {
+		return mouseDown[to_integral(btn)];
+	}
+
+	bool Input::getMouseUp(Mouse btn) {
+		return mouseUp[to_integral(btn)];
+	}
+
+	bool Input::getMouse(Mouse btn) {
+		return mouseActive[to_integral(btn)];
+	}
+
+	void Input::getMouseXY(int& x, int& y) {
+	        x = mouse_x;
+		y = mouse_y;
+	}
+
+	Input::Keys Input::SDLtoKey(int SDLkey) {
 		switch (SDLkey) {
 		case SDL_SCANCODE_UNKNOWN: return Keys::UNKNOWN;
 		case SDL_SCANCODE_A: return Keys::A;
