@@ -18,6 +18,7 @@ namespace DOIT {
 }
 
 #include "window.hpp"
+#include "input.hpp"
 #include "game.hpp"
 
 namespace DOIT {

@@ -1,12 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "input.hpp"
+
 namespace DOIT {
 	class Game {
 	public:
+		Input input;
+
 		Game();
 		~Game();
-		void input();
 		void update();
 		void render();
 	};

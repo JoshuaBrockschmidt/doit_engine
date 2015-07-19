@@ -49,7 +49,6 @@ namespace DOIT {
 				}
 		}
 
-		game.input();
 		game.update();
 	}
 
