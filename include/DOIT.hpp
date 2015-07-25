@@ -22,26 +22,22 @@ namespace DOIT {
 #include "game.hpp"
 
 namespace DOIT {
-	class Engine {
-	public:
-		Window window;
-		Game game;
+	namespace Engine {
+		extern Window* window;
+		extern double frameCap;
+		extern bool running;
 
-		Engine(unsigned int w, unsigned int h, std::string _title, double _frameCap);
-		~Engine();
-		void start();
-		void stop();
-		void setFrameCap(double newFrameCap);
-	private:
-		double frameCap;
-		bool running;
-
+	        void init(unsigned int w, unsigned int h, std::string _title, double _frameCap);
+		void cleanUp();
 		void update();
 		void render();
 		void run();
+		void start();
+		void stop();
+		void setFrameCap(double newFrameCap);
 	};
 
-	void init();
+	void init(unsigned int w, unsigned int h, std::string title, double frameCap);
 	void cleanUp();
 }
 

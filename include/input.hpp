@@ -6,8 +6,7 @@
 #include "general.hpp"
 
 namespace DOIT {
-	class Input {
-	public:
+	namespace Input {
 	        enum struct Keys: int {
 			UNKNOWN,
 			A,
@@ -261,8 +260,15 @@ namespace DOIT {
 			NUM_ITEMS
 		};
 
-		Input();
-		~Input();
+		extern bool keysUp[];
+		extern bool keysDown[];
+		extern bool keysActive[];
+		extern bool mouseUp[];
+		extern bool mouseDown[];
+		extern bool mouseActive[];
+		extern int mouse_x, mouse_y;
+
+		void init();
 		void update();
 		bool getKeyDown(Keys k);
 		bool getKeyUp(Keys k);
@@ -271,17 +277,8 @@ namespace DOIT {
 		bool getMouseUp(Mouse btn);
 		bool getMouse(Mouse btn);
 		void getMouseXY(int& x, int& y);
-	private:
-		bool keysUp[to_integral(Keys::NUM_ITEMS)];
-		bool keysDown[to_integral(Keys::NUM_ITEMS)];
-		bool keysActive[to_integral(Keys::NUM_ITEMS)];
-		bool mouseUp[to_integral(Mouse::NUM_ITEMS)];
-		bool mouseDown[to_integral(Mouse::NUM_ITEMS)];
-		bool mouseActive[to_integral(Mouse::NUM_ITEMS)];
-		int mouse_x, mouse_y;
-
 		Keys SDLtoKey(int SDLkey);
-	};
+	}
 }
 
 #endif

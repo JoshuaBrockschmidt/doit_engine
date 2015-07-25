@@ -1,14 +1,11 @@
 #include "game.hpp"
 
 namespace DOIT {
-	Game::Game():
-		input() {}
+	namespace Game {
+		void update() {
+			Input::update();
+		}
 
-	Game::~Game() {}
-
-	void Game::update() {
-		input.update();
+		void render() {}
 	}
-
-	void Game::render() {}
 }

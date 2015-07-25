@@ -4,15 +4,10 @@
 #include "input.hpp"
 
 namespace DOIT {
-	class Game {
-	public:
-		Input input;
-
-		Game();
-		~Game();
+	namespace Game {
 		void update();
 		void render();
-	};
+	}
 }
 
 #endif //GAME_H

@@ -6,12 +6,10 @@ const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
 const std::string TITLE = "Test Window";
 const double FRAME_CAP = 5000.0;
-DOIT::Engine *engine;
 
 int main() {
 	try {
-		DOIT::init();
-		engine = new DOIT::Engine(WIDTH, HEIGHT, TITLE, FRAME_CAP);
+	        DOIT::init(WIDTH, HEIGHT, TITLE, FRAME_CAP);
 	} catch (const DOIT::InitError& e) {
 		std::cerr << "Could not initialize: "
 			  << e.what() << std::endl;
@@ -22,9 +20,8 @@ int main() {
 		return 1;
 	}
 
-	engine->start();
+	DOIT::Engine::start();
 
-	delete engine;
 	DOIT::cleanUp();
 
 	return 0;

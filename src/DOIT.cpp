@@ -13,86 +13,96 @@ namespace DOIT {
 		return msg.c_str();
 	}
 
-	Engine::Engine(unsigned int w, unsigned int h, std::string _title, double _frameCap):
-		window(w, h, _title), game() {
-		frameCap = _frameCap;
-		running = false;
-	}
+	namespace Engine {
+		Window* window;
+		double frameCap;
+		bool running;
 
-	Engine::~Engine() {}
-
-	void Engine::start() {
-		if (running) return;
-		run();
-	}
-
-	void Engine::stop() {
-		running = false;
-	}
-
-	void Engine::setFrameCap(double newFrameCap) {
-		//TODO: Possibly throw an error.
-		if (newFrameCap <= 0)
-			return;
-
-		frameCap = newFrameCap;
-	}
-
-	void Engine::update() {
-		SDL_Event ev;
-		while (SDL_PollEvent(&ev)) {
-			if (ev.type == SDL_WINDOWEVENT &&
-			    ev.window.event == SDL_WINDOWEVENT_CLOSE)
-				if (ev.window.windowID == window.getID()) {
-					stop();
-					return;
-				}
+		void init(unsigned int w, unsigned int h, std::string _title, double _frameCap) {
+			window = new Window(w, h, _title);
+			frameCap = _frameCap;
+			running = false;
 		}
 
-		game.update();
-	}
+		void cleanUp() {
+			delete window;
+		}
 
-	void Engine::render() {
-		window.render();
-		game.render();
-	}
+		void start() {
+			if (running) return;
+			run();
+		}
 
-	void Engine::run() {
-		running = true;
+		void stop() {
+			running = false;
+		}
 
-		int frames = 0;
-		Uint32 frameCnt = 0;
+		void setFrameCap(double newFrameCap) {
+			//TODO: Possibly throw an error.
+			if (newFrameCap <= 0)
+				return;
 
-		const double frameTime = 1.0 / frameCap;
-		Uint32 startTime, passedTime, lastTime;
-		double unprocessedTime = 0;
-		lastTime = Time::getTime();
+			frameCap = newFrameCap;
+		}
 
-		while(running) {
-			startTime = Time::getTime();
-			passedTime = startTime - lastTime;
-			lastTime = startTime;
-			unprocessedTime += passedTime / (double)Time::second;
-			frameCnt += passedTime;
+		void update() {
+			SDL_Event ev;
+			while (SDL_PollEvent(&ev)) {
+				if (ev.type == SDL_WINDOWEVENT &&
+				    ev.window.event == SDL_WINDOWEVENT_CLOSE)
+					if (ev.window.windowID == window->getID()) {
+						stop();
+						return;
+					}
+			}
 
-			while (unprocessedTime > frameTime) {
-				unprocessedTime -= frameTime;
+			Game::update();
+		}
 
-				update();
+		void render() {
+			window->render();
+			Game::render();
+		}
 
-				if (frameCnt >= Time::second) {
-					std::cout << "FPS: " << frames << std::endl;
-					frames = 0;
-					frameCnt = 0;
+		void run() {
+			running = true;
+
+			int frames = 0;
+			Uint32 frameCnt = 0;
+
+			const double frameTime = 1.0 / frameCap;
+			Uint32 startTime, passedTime, lastTime;
+			double unprocessedTime = 0;
+			lastTime = Time::getTime();
+
+			while(running) {
+				startTime = Time::getTime();
+				passedTime = startTime - lastTime;
+				lastTime = startTime;
+				unprocessedTime += passedTime / (double)Time::second;
+				frameCnt += passedTime;
+
+				while (unprocessedTime > frameTime) {
+					unprocessedTime -= frameTime;
+
+					update();
+
+					if (frameCnt >= Time::second) {
+						//DEBUG
+						std::cout << "FPS: " << frames << std::endl;
+						//EOF DEBUG
+						frames = 0;
+						frameCnt = 0;
+					}
+
+					render();
+					frames++;
 				}
-
-				render();
-				frames++;
 			}
 		}
 	}
 
-	void init() {
+	void init(unsigned int w, unsigned int h, std::string title, double frameCap) {
 		if (wasInit) return;
 
 		if (!SDL_WasInit(SDL_INIT_VIDEO)) {
@@ -106,6 +116,9 @@ namespace DOIT {
 			SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		}
 
+		Engine::init(w, h, title, frameCap);
+		Input::init();
+
 		wasInit = true;
 	}
 
@@ -113,6 +126,8 @@ namespace DOIT {
 		if (!wasInit) return;
 
 		SDL_Quit();
+
+		Engine::cleanUp();
 
 		wasInit = false;
 	}
