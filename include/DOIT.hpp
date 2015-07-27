@@ -22,6 +22,7 @@ namespace DOIT {
 #include "game.hpp"
 #include "vector2.hpp"
 #include "vector3.hpp"
+#include "matrix4.hpp"
 
 namespace DOIT {
 	namespace Engine {
