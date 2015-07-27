@@ -26,15 +26,15 @@ namespace DOIT {
 		z = _z;
 	}
 
-	double Vector3::getX() {
+	double Vector3::getX() const {
 		return x;
 	}
 
-	double Vector3::getY() {
+	double Vector3::getY() const {
 		return y;
 	}
 
-	double Vector3::getZ() {
+	double Vector3::getZ() const {
 		return z;
 	}
 

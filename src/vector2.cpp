@@ -21,11 +21,11 @@ namespace DOIT {
 		y = _y;
 	}
 
-	double Vector2::getX() {
+	double Vector2::getX() const {
 		return x;
 	}
 
-	double Vector2::getY() {
+	double Vector2::getY() const {
 		return y;
 	}
 

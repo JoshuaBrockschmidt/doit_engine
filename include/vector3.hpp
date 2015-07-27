@@ -30,15 +30,15 @@ namespace DOIT {
 
 		/* Returns the x value of a vector.
 		 */
-		double getX();
+		double getX() const;
 
 		/* Returns the y value of a vector.
 		 */
-		double getY();
+		double getY() const;
 
 		/* Returns the z value of a vector.
 		 */
-		double getZ();
+		double getZ() const;
 
 		/* Returns the magnitude of a vector.
 		 */
