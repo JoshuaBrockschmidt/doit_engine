@@ -51,6 +51,26 @@ namespace DOIT {
 		return std::string();
 	}
 
+	Matrix4 Matrix4::operator+(const Matrix4& mat) {
+		Matrix4 res = *this;
+
+		for (int x=0; x<4; x++)
+			for (int y=0; y<4; y++)
+				res.m[x][y] += mat.m[x][y];
+
+		return res;
+	}
+
+	Matrix4 Matrix4::operator-(const Matrix4& mat) {
+		Matrix4 res = *this;
+
+		for (int x=0; x<4; x++)
+			for (int y=0; y<4; y++)
+				res.m[x][y] -= mat.m[x][y];
+
+		return res;
+	}
+
 	Matrix4 Matrix4::operator*(const Matrix4& mat) {
 		Matrix4 res;
 
@@ -67,13 +87,47 @@ namespace DOIT {
 		return res;
 	}
 
+	Matrix4 Matrix4::operator*(double mult) {
+		Matrix4 res = *this;
+
+	        for (int x=0; x<4; x++)
+			for (int y=0; y<4; y++)
+				res.m[x][y] *= mult;
+	}
+
+	Matrix4 Matrix4::operator/(double div) {
+		Matrix4 res = *this;
+
+	        for (int x=0; x<4; x++)
+			for (int y=0; y<4; y++)
+				res.m[x][y] /= div;
+
+	}
+
 	Matrix4& Matrix4::operator=(const Matrix4& mat) {
 	        copy(mat);
+	}
+
+	Matrix4& Matrix4::operator+=(const Matrix4& mat) {
+		copy(*this + mat);
+	}
+
+	Matrix4& Matrix4::operator-=(const Matrix4& mat) {
+		copy(*this - mat);
 	}
 
 	Matrix4& Matrix4::operator*=(const Matrix4& mat) {
 		copy(*this * mat);
 	}
+
+	Matrix4& Matrix4::operator*=(double mult) {
+		copy(*this * mult);
+	}
+
+	Matrix4& Matrix4::operator/=(double div) {
+		copy(*this / div);
+	}
+
 
 
 	std::array<std::array<double, 4>, 4> Matrix4::empty =

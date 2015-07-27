@@ -45,9 +45,17 @@ namespace DOIT {
 		 */
 		std::string to_string();
 
+		Matrix4 operator+(const Matrix4& mat);
+		Matrix4 operator-(const Matrix4& mat);
 		Matrix4 operator*(const Matrix4& mat);
+		Matrix4 operator*(double mult);
+		Matrix4 operator/(double div);
 		Matrix4& operator=(const Matrix4& mat);
+		Matrix4& operator+=(const Matrix4& mat);
+		Matrix4& operator-=(const Matrix4& mat);
 		Matrix4& operator*=(const Matrix4& mat);
+		Matrix4& operator*=(double mult);
+		Matrix4& operator/=(double div);
 	private:
 		static std::array<std::array<double, 4>, 4> empty;
 		static std::array<std::array<double, 4>, 4> identity;
