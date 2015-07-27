@@ -46,7 +46,7 @@ namespace DOIT {
 		return x*v.x + y*v.y + z*v.z;
 	}
 
-	Vector3 cross(const Vector3& v) {
+	Vector3 Vector3::cross(const Vector3& v) {
 		double _x = y*v.z - z*v.y;
 
 		return Vector3(y*v.z - z*v.y,
