@@ -20,6 +20,8 @@ namespace DOIT {
 #include "window.hpp"
 #include "input.hpp"
 #include "game.hpp"
+#include "vector2.hpp"
+#include "vector3.hpp"
 
 namespace DOIT {
 	namespace Engine {
