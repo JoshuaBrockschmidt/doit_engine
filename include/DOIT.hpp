@@ -24,6 +24,7 @@ namespace DOIT {
 #include "vector3.hpp"
 #include "matrix4.hpp"
 #include "quaternion.hpp"
+#include "renderutil.hpp"
 
 namespace DOIT {
 	namespace Engine {

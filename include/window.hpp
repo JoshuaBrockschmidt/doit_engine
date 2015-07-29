@@ -58,7 +58,7 @@ namespace DOIT {
 		Uint32 getID();
 
 	private:
-		SDL_Window* win;
+		SDL_Window* SDLwin;
 		unsigned int width;
 		unsigned int height;
 		std::string title;

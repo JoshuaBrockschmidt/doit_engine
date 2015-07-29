@@ -5,7 +5,7 @@
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
 const std::string TITLE = "Test Window";
-const double FRAME_CAP = 5000.0;
+const double FRAME_CAP = 100.0;
 
 int main() {
 	try {

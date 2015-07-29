@@ -1,11 +1,15 @@
 #include "time.hpp"
+//DEBUG
+#include <iostream>
+//EOF DEBUG
 
 namespace DOIT {
 	namespace Time {
 		double delta = 0;
 
 		Uint32 getTime() {
-			SDL_GetTicks();
+			//TODO: Consider using nano seconds instead.
+			return SDL_GetTicks();
 		}
 
 		double getDelta() {

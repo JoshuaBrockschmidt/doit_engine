@@ -4,14 +4,18 @@
 
 namespace DOIT {
 	Window::Window(unsigned int w, unsigned int h, std::string _title) {
-		win = SDL_CreateWindow(_title.c_str(),
+		SDLwin = SDL_CreateWindow(_title.c_str(),
 				       SDL_WINDOWPOS_UNDEFINED,
 				       SDL_WINDOWPOS_UNDEFINED,
 				       w, h,
 				       flags );
-		if(win == nullptr) {
-			throw InitError();
+		if (SDLwin == nullptr) {
+			throw InitError(SDL_GetError());
 		}
+
+		//DEBUG
+		std::cout << "Window ID: " << SDL_GetWindowID(SDLwin) << std::endl;
+		//EOF DEBUG
 
 		width = w;
 		height = h;
@@ -19,22 +23,21 @@ namespace DOIT {
 	}
 
         Window::~Window() {
-		if (win != nullptr) SDL_DestroyWindow(win);
+		if (SDLwin != nullptr) SDL_DestroyWindow(SDLwin);
 	}
 
 	void Window::render() {
-		//TODO: Render everything OpenGL has drawn
-		return;
+		SDL_GL_SwapWindow(SDLwin);
 	}
 
 	void Window::setSize(unsigned int w, unsigned int h) {
-		SDL_SetWindowSize(win, w, h);
+		SDL_SetWindowSize(SDLwin, w, h);
 		width = w;
 		height = h;
 	}
 
 	void Window::setTitle(std::string newTitle) {
-		SDL_SetWindowTitle(win, newTitle.c_str());
+		SDL_SetWindowTitle(SDLwin, newTitle.c_str());
 	}
 
 	unsigned int Window::getWidth() {
@@ -50,6 +53,6 @@ namespace DOIT {
 	}
 
 	Uint32 Window::getID() {
-		return SDL_GetWindowID(win);
+		return SDL_GetWindowID(SDLwin);
 	}
 }

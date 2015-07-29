@@ -26,7 +26,7 @@ WARNFLAGS   += -Wwrite-strings -Wdisabled-optimization -Wpointer-arith
 WARNFLAGS   += -Werror
 CFLAGS      := $(INCLUDES) $(BASEFLAGS)
 CFLAGS      += -std=c++11
-LDFLAGS     := -lSDL2
+LDFLAGS     := -lSDL2 -lGL -lGLU
 
 # build rules
 all: $(NAME)
