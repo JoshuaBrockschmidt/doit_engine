@@ -13,10 +13,6 @@ namespace DOIT {
 			throw InitError(SDL_GetError());
 		}
 
-		//DEBUG
-		std::cout << "Window ID: " << SDL_GetWindowID(SDLwin) << std::endl;
-		//EOF DEBUG
-
 		width = w;
 		height = h;
 		title = _title;

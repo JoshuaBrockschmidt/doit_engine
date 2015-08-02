@@ -5,6 +5,8 @@
 
 namespace DOIT {
 	namespace Game {
+		void init();
+		void cleanUp();
 		void update();
 		void render();
 	}

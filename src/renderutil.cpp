@@ -1,10 +1,12 @@
 #include <iostream>
+#include <GL/glew.h>
 #include <GL/glu.h>
 #include "DOIT.hpp"
 #include "renderutil.hpp"
 
 namespace DOIT {
 	namespace RenderUtil {
+		bool GLEW_wasInit = false;
 	        SDL_GLContext glContext;
 
 		void init() {
@@ -16,6 +18,27 @@ namespace DOIT {
 				m.append(SDL_GetError());
 				throw InitError(m);
 			}
+
+			glewExperimental = GL_TRUE;
+			GLenum glewErr = glewInit();
+			if (glewErr != GLEW_OK) {
+				std::string m;
+				m.append("Error initializing OpenGL GLEW extension: ");
+				m.append((const char*)glewGetErrorString(glewErr));
+				throw InitError(m);
+			} else {
+				/* GLEW does not play nice with OpenGL 4.4.
+				 * GLEW thinks OpenGL 4.4 is "pretentious" and
+				 * "entitled". GLEW likes to throw an invalid
+				 * enumerant error the next time glGetError is
+				 * called after GLEW's initialization.
+				 * glGetError must be envoked to discard this
+				 * faulty error. GLEW makes my code look sloppy.
+				 * We do not like GLEW. We tolerate GLEW.
+				 */
+				GLenum junk = glGetError();
+			}
+			GLEW_wasInit = true;
 
 			glClearColor(0.0f, 0.0f, 0.0f, 0.2f);
 			glFrontFace(GL_CW);
@@ -33,7 +56,7 @@ namespace DOIT {
 					  << SDL_GetError() << std::endl;
 			}
 
-			GLenum error = glGetError();
+		        GLenum error = glGetError();
 			if (error != GL_NO_ERROR) {
 				std::string m;
 				m.append("Error initializing OpenGL: OpenGL Error: ");

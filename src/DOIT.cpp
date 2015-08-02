@@ -21,12 +21,14 @@ namespace DOIT {
 		void init(unsigned int w, unsigned int h, std::string _title, double _frameCap) {
 			window = new Window(w, h, _title);
 			RenderUtil::init();
+			Game::init();
 			frameCap = _frameCap;
 			running = false;
 		}
 
 		void cleanUp() {
 			RenderUtil::cleanUp();
+			Game::cleanUp();
 			delete window;
 		}
 
@@ -111,7 +113,7 @@ namespace DOIT {
 	void init(unsigned int w, unsigned int h, std::string title, double frameCap) {
 		if (wasInit) return;
 
-		if(SDL_Init(SDL_INIT_VIDEO) != 0) {
+		if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 			std::string m;
 			m.append("Error initializing SDL2: ");
 			m.append(SDL_GetError());
