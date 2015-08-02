@@ -14,12 +14,11 @@ namespace DOIT {
 	}
 
 	namespace Engine {
-		Window* window;
 		double frameCap;
 		bool running;
 
 		void init(unsigned int w, unsigned int h, std::string _title, double _frameCap) {
-			window = new Window(w, h, _title);
+			Window::open(w, h, _title);
 			RenderUtil::init();
 			Game::init();
 			frameCap = _frameCap;
@@ -29,7 +28,7 @@ namespace DOIT {
 		void cleanUp() {
 			RenderUtil::cleanUp();
 			Game::cleanUp();
-			delete window;
+			Window::close();
 		}
 
 		void start() {
@@ -54,7 +53,7 @@ namespace DOIT {
 			while (SDL_PollEvent(&ev)) {
 				if (ev.type == SDL_WINDOWEVENT &&
 				    ev.window.event == SDL_WINDOWEVENT_CLOSE) {
-					if (ev.window.windowID == window->getID()) {
+					if (ev.window.windowID == Window::getID()) {
 						stop();
 						return;
 					}
@@ -67,7 +66,7 @@ namespace DOIT {
 		void render() {
 		        RenderUtil::clearScreen();
 			Game::render();
-			window->render();
+			Window::render();
 		}
 
 		void run() {

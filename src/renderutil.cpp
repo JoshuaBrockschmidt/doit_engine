@@ -10,7 +10,7 @@ namespace DOIT {
 	        SDL_GLContext glContext;
 
 		void init() {
-			SDL_Window* win = SDL_GetWindowFromID(Engine::window->getID());
+			SDL_Window* win = SDL_GetWindowFromID(Window::getID());
 			glContext = SDL_GL_CreateContext(win);
 			if (glContext == NULL) {
 				std::string m;

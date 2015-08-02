@@ -5,12 +5,13 @@
 #include <SDL2/SDL.h>
 
 namespace DOIT {
-	class Window {
-	public:
+	namespace Window {
 		const Uint32 flags = SDL_WINDOW_OPENGL;
 
-		Window(unsigned int w, unsigned int h, std::string _title);
-		~Window();
+		/**
+		   Initialize window.
+		 */
+		void open(unsigned int w, unsigned int h, std::string _title);
 
 		/**
 		   Cleanup and close.
@@ -56,12 +57,6 @@ namespace DOIT {
 		   Returns SDL window ID.
 		*/
 		Uint32 getID();
-
-	private:
-		SDL_Window* SDLwin;
-		unsigned int width;
-		unsigned int height;
-		std::string title;
 	};
 }
 

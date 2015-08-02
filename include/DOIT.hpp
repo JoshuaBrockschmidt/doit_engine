@@ -30,7 +30,6 @@ namespace DOIT {
 
 namespace DOIT {
 	namespace Engine {
-		extern Window* window;
 		extern double frameCap;
 		extern bool running;
 
