@@ -1,7 +1,7 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <iostream>
+#include <vector>
 #include <GL/gl.h>
 
 namespace DOIT {
@@ -16,6 +16,7 @@ namespace DOIT {
 		void bind();
 	private:
 		GLuint program;
+		std::vector<GLuint> activeShaders;
 
 		void addProgram(std::string data, GLenum type);
 	};

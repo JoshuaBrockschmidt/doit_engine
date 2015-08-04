@@ -16,7 +16,12 @@ namespace DOIT {
 		}
 	}
 
-	Shader::~Shader() {}
+	Shader::~Shader() {
+		glDeleteProgram(program);
+		for (std::vector<GLuint>::iterator it = activeShaders.begin();
+		     it != activeShaders.end(); ++it)
+			glDeleteShader(*it);
+	}
 
 	void Shader::addVertexShader(std::string data) {
 		addProgram(data, GL_VERTEX_SHADER);
@@ -34,13 +39,15 @@ namespace DOIT {
 		glLinkProgram(program);
 
 		//TODO: Possibly throw an error.
-		GLint params;
-		glGetShaderiv(program, GL_LINK_STATUS, &params);
-		if (params == 0) {
-			GLchar* shaderLog;
-			glGetShaderInfoLog(program, 1024, NULL, shaderLog);
+		GLint success;
+	        glGetProgramiv(program, GL_LINK_STATUS, &success);
+		if (success == GL_FALSE) {
+			GLint logLen = 0;
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLen);
+			GLchar programLog[logLen];
+			glGetProgramInfoLog(program, logLen, &logLen, programLog);
 			std::cerr << gluErrorString(glGetError()) << ": "
-				  << (char *)shaderLog
+				  << (char *)programLog
 				  << std::endl;
 			return;
 		}
@@ -48,12 +55,14 @@ namespace DOIT {
 		glValidateProgram(program);
 
 		//TODO: Possibly throw an error.
-		glGetShaderiv(program, GL_VALIDATE_STATUS, &params);
-		if (params == 0) {
-			GLchar* shaderLog;
-			glGetShaderInfoLog(program, 1024, NULL, shaderLog);
+	        glGetProgramiv(program, GL_VALIDATE_STATUS, &success);
+		if (success == GL_FALSE) {
+			GLint logLen = 0;
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLen);
+			GLchar programLog[logLen];
+			glGetProgramInfoLog(program, logLen, &logLen, programLog);
 			std::cerr << gluErrorString(glGetError()) << ": "
-				  << (char *)shaderLog
+				  << (char *)programLog
 				  << std::endl;
 			return;
 		}
@@ -76,22 +85,25 @@ namespace DOIT {
 		}
 
 		const GLchar* data_c = data.c_str();
-		const GLint len = data.length();
-		glShaderSource(shader, 1, &data_c, &len);
+		glShaderSource(shader, 1, &data_c, NULL);
 		glCompileShader(shader);
 
 		//TODO: Possibly throw an error.
-		GLint params;
-		glGetShaderiv(program, GL_COMPILE_STATUS, &params);
-		if (params == 0) {
-			GLchar* shaderLog;
-			glGetShaderInfoLog(program, 1024, NULL, shaderLog);
+		GLint success;
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+		if (success == GL_FALSE) {
+			GLint logLen = 0;
+			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
+			GLchar shaderLog[logLen];
+			glGetShaderInfoLog(shader, logLen, &logLen, shaderLog);
 			std::cerr << gluErrorString(glGetError()) << ": "
 				  << (char *)shaderLog
 				  << std::endl;
+			glDeleteShader(shader);
 			return;
 		}
 
-		glAttachShader(shader, program);
+		glAttachShader(program, shader);
+		activeShaders.push_back(shader);
 	}
 }
