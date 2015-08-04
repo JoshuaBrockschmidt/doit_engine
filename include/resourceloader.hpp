@@ -5,7 +5,7 @@
 
 namespace DOIT {
 	namespace ResourceLoader {
-		extern const std::string shaderDir("./res/shaders");
+		extern const std::string shaderDir;
 
 		/* Loads a shader from a filename relative to ./res/shaders/
 		 * If specified filename does no exist, an empty string is

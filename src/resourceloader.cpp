@@ -6,9 +6,11 @@
 
 namespace DOIT {
 	namespace ResourceLoader {
+		const std::string shaderDir = std::string("./res/shaders/");
+
 		std::string loadShader(std::string filename) {
 			std::ifstream shaderFile(shaderDir + filename);
-			if (shaderFile.fail()) {
+			if (!shaderFile.is_open()) {
 				std::cerr << "Could not load shader: "
 					  << "Error opening "
 					  << shaderDir << filename
@@ -18,8 +20,11 @@ namespace DOIT {
 				return std::string("");
 			}
 
-			std::string content((std::istreambuf_iterator<char>(shaderFile)),
-					    (std::istreambuf_iterator<char>()) );
+			std::string content, line;
+			while (std::getline(shaderFile, line)) {
+				content += line + '\n';
+			}
+
 			shaderFile.close();
 
 			return content;
