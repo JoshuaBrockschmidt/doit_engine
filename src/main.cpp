@@ -19,6 +19,7 @@ int main() {
 			  << e.what() << std::endl;
 		return 1;
 	}
+	std::cout << "OpenGL Version: " << DOIT::RenderUtil::getOpenGLVersion() << std::endl;
 
 	DOIT::Engine::start();
 
