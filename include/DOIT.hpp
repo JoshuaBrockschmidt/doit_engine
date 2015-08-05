@@ -17,16 +17,18 @@ namespace DOIT {
 	};
 }
 
-#include "window.hpp"
-#include "input.hpp"
 #include "game.hpp"
+#include "input.hpp"
+#include "matrix4.hpp"
+#include "mesh.hpp"
+#include "quaternion.hpp"
+#include "renderutil.hpp"
+#include "resourceloader.hpp"
+#include "shader.hpp"
 #include "vector2.hpp"
 #include "vector3.hpp"
 #include "vertex.hpp"
-#include "matrix4.hpp"
-#include "quaternion.hpp"
-#include "renderutil.hpp"
-#include "mesh.hpp"
+#include "window.hpp"
 
 namespace DOIT {
 	namespace Engine {
