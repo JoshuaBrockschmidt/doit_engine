@@ -5,6 +5,16 @@
 #include <GL/gl.h>
 
 namespace DOIT {
+	class ShaderError: public std::exception {
+	public:
+		ShaderError();
+		ShaderError(const std::string& m);
+		virtual ~ShaderError() throw();
+		virtual const char* what() const throw();
+	private:
+		std::string msg;
+	};
+
 	class Shader {
 	public:
 		Shader();
