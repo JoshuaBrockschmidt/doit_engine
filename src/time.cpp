@@ -1,7 +1,4 @@
 #include "time.hpp"
-//DEBUG
-#include <iostream>
-//EOF DEBUG
 
 namespace DOIT {
 	namespace Time {

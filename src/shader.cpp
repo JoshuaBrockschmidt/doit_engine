@@ -77,13 +77,6 @@ namespace DOIT {
 
 	void Shader::bind() {
 		glUseProgram(program);
-		GLenum err = glGetError();
-		if (err) {
-			std::string m;
-			m +=  "Could not use program: ";
-			m += (char *)gluErrorString(err);
-			throw ShaderError(m);
-		}
 	}
 
 	void Shader::addProgram(std::string data, GLenum type) {
