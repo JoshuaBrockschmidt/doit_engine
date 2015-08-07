@@ -3,8 +3,6 @@
 #include "mesh.hpp"
 #include "renderutil.hpp"
 
-//TODO: Not sure how to use OpenGL VBO buffer thingies. Could cause errors later down the road.
-
 namespace DOIT {
 	Mesh::Mesh() {
 		if (not RenderUtil::GLEW_wasInit) {
@@ -14,24 +12,26 @@ namespace DOIT {
 		}
 
 		glGenBuffers(1, &vbo);
-		size = 0;
+		size = Vertex::size * sizeof(double);
 	}
 
 	Mesh::~Mesh() {
 		glDeleteBuffers(1, &vbo);
 	}
 
-	void Mesh::addVertices(Vertex vertices[]) {
-
-		size = Vertex::size * sizeof(double);
-
+	void Mesh::addVertices(Vertex vertices[], unsigned int len) {
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		double buffer[size][3];
-		for (int i=0; i<size; i++) {
-			vertices[i].buffer(buffer[i]);
+
+		double buffer[len*Vertex::size];
+		double prebuf[3];
+		for (int i=0; i<len; i++) {
+			vertices[i].buffer(prebuf);
+			for (int j=0, k=i*Vertex::size; j<Vertex::size; j++, k++)
+				buffer[k] = prebuf[j];
 		}
+
 		glBufferData(GL_ARRAY_BUFFER,
-			     sizeof(vertices),
+			     sizeof(buffer),
 			     buffer,
 			     GL_STATIC_DRAW );
 	}
@@ -40,14 +40,13 @@ namespace DOIT {
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glVertexAttribPointer(0,
-				      3,
-				      GL_DOUBLE,
-				      GL_FALSE,
-				      Vertex::size*sizeof(double),
-				      0 );
+		glVertexAttribLPointer(0,
+				       Vertex::size,
+				       GL_DOUBLE,
+				       0,
+				       NULL );
 
-		glDrawArrays(GL_TRIANGLES, 0, size);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glDisableVertexAttribArray(0);
 	}

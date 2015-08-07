@@ -9,7 +9,7 @@ namespace DOIT {
 	public:
 		Mesh();
 		~Mesh();
-		void addVertices(Vertex vertices[]);
+		void addVertices(Vertex vertices[], unsigned int len);
 		void draw();
 	private:
 		GLuint vbo;
