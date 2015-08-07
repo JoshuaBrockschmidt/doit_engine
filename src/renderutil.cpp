@@ -7,6 +7,8 @@
 namespace DOIT {
 	namespace RenderUtil {
 		bool GLEW_wasInit = false;
+		GLuint vao;
+
 	        SDL_GLContext glContext;
 
 		void init() {
@@ -39,6 +41,9 @@ namespace DOIT {
 				GLenum junk = glGetError();
 			}
 			GLEW_wasInit = true;
+
+			glGenVertexArrays(1, &vao);
+			glBindVertexArray(vao);
 
 			glClearColor(0.0f, 0.0f, 0.0f, 0.2f);
 			glFrontFace(GL_CW);

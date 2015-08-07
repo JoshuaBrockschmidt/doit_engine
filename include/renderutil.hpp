@@ -2,12 +2,14 @@
 #define RENDERUTIL_H
 
 #include <string>
+#include <GL/gl.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
 namespace DOIT {
 	namespace RenderUtil {
 		extern bool GLEW_wasInit;
+		extern GLuint vao;
 
 		/* Initialize some OpenGL functionality.
 		 * That's as specific as I can be. You're welcome.
