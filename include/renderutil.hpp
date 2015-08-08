@@ -9,7 +9,6 @@
 namespace DOIT {
 	namespace RenderUtil {
 		extern bool GLEW_wasInit;
-		extern GLuint vao;
 
 		/* Initialize some OpenGL functionality.
 		 * That's as specific as I can be. You're welcome.

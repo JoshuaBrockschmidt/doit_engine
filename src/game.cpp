@@ -16,11 +16,11 @@ namespace DOIT {
 
 			Vertex data[] = {
 				Vertex(Vector3(-1, -1,  0)),
-				Vertex(Vector3( 1, -1,  0)),
-				Vertex(Vector3( 0,  1,  0))
+				Vertex(Vector3( 0,  1,  0)),
+				Vertex(Vector3( 1, -1,  0))
 			};
 
-			testMesh->addVertices(data, 3);
+		        testMesh->addVertices(data, 3);
 			testShader->addVertexShader(ResourceLoader::loadShader("basicVertex.vs"));
 			testShader->addFragmentShader(ResourceLoader::loadShader("basicFragment.fs"));
 			testShader->compileShader();

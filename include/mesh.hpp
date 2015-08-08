@@ -12,7 +12,7 @@ namespace DOIT {
 		void addVertices(Vertex vertices[], unsigned int len);
 		void draw();
 	private:
-		GLuint vbo;
+		GLuint vao, vbo;
 		int size;
 	};
 }
