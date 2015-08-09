@@ -15,8 +15,11 @@ namespace DOIT {
 						  SDL_WINDOWPOS_UNDEFINED,
 						  w, h,
 						  flags );
-			if (SDLwin == nullptr) {
-				throw InitError(SDL_GetError());
+			if (SDLwin == NULL) {
+				std::string m;
+				m += "SDL Error: ";
+				m += SDL_GetError();
+				throw InitError(m);
 			}
 
 			width = w;
@@ -25,7 +28,7 @@ namespace DOIT {
 		}
 
 		void close() {
-			if (SDLwin != nullptr) SDL_DestroyWindow(SDLwin);
+			if (SDLwin != NULL) SDL_DestroyWindow(SDLwin);
 		}
 
 		void render() {

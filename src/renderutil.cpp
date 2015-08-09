@@ -15,8 +15,8 @@ namespace DOIT {
 			glContext = SDL_GL_CreateContext(win);
 			if (glContext == NULL) {
 				std::string m;
-				m.append("Error associating window with OpenGL: SDL Error: ");
-				m.append(SDL_GetError());
+				m += "SDL Error: ";
+				m += SDL_GetError();
 				throw InitError(m);
 			}
 
