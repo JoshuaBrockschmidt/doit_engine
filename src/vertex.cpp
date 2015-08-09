@@ -1,16 +1,16 @@
 #include "vertex.hpp"
 
 namespace DOIT {
-	Vertex::Vertex(Vector3 v):
+	Vertex::Vertex(Vector3f v):
 		pos(v) {}
 
 	Vertex::~Vertex() {};
 
-	void Vertex::setPos(Vector3 v) {
+	void Vertex::setPos(Vector3f v) {
 		pos = v;
 	}
 
-	Vector3 Vertex::getPos() {
+	Vector3f Vertex::getPos() {
 		return pos;
 	}
 

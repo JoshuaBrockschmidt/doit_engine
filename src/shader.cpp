@@ -100,22 +100,22 @@ namespace DOIT {
 		glUniform1f(uniforms[uName], v);
 	}
 
-	void Shader::setUniform(std::string uName, Vector3 v) {
+	void Shader::setUniform(std::string uName, Vector3f v) {
 		glUniform3f(uniforms[uName],
-			    (GLfloat)v.getX(),
-			    (GLfloat)v.getY(),
-			    (GLfloat)v.getZ() );
+			    v.getX(),
+			    v.getY(),
+			    v.getZ() );
 	}
 
-	void Shader::setUniform(std::string uName, Matrix4 v) {
-		std::array<std::array<double, 4>, 4> m = v.getM();
+	void Shader::setUniform(std::string uName, Matrix4f v) {
+		std::array<std::array<float, 4>, 4> m = v.getM();
 		GLfloat mf[4][4];
 		for (int i=0; i<4; i++)
 			for (int k=0; k<4; k++)
-				mf[i][k] = (GLfloat)m[i][k];
+				mf[i][k] = m[i][k];
 		glUniformMatrix4fv(uniforms[uName],
 				   1,
-				   GL_FALSE, //TODO: Should I transpose?
+				   GL_TRUE, //TODO: Should I transpose?
 				   (const GLfloat*) mf );
 	}
 

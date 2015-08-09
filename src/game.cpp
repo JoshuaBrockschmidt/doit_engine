@@ -2,7 +2,8 @@
 #include "mesh.hpp"
 #include "resourceloader.hpp"
 #include "shader.hpp"
-#include "vector3.hpp"
+#include "time.hpp"
+#include "vector3f.hpp"
 #include "vertex.hpp"
 
 namespace DOIT {
@@ -15,9 +16,9 @@ namespace DOIT {
 			testShader = new Shader();
 
 			Vertex data[] = {
-				Vertex(Vector3(-1, -1,  0)),
-				Vertex(Vector3( 0,  1,  0)),
-				Vertex(Vector3( 1, -1,  0))
+				Vertex(Vector3f(-1, -1,  0)),
+				Vertex(Vector3f( 0,  1,  0)),
+				Vertex(Vector3f( 1, -1,  0))
 			};
 
 		        testMesh->addVertices(data, 3);

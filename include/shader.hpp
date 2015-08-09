@@ -4,8 +4,8 @@
 #include <map>
 #include <vector>
 #include <GL/gl.h>
-#include "matrix4.hpp"
-#include "vector3.hpp"
+#include "matrix4f.hpp"
+#include "vector3f.hpp"
 
 namespace DOIT {
 	class ShaderError: public std::exception {
@@ -30,8 +30,8 @@ namespace DOIT {
 		void addUniform(std::string uName);
 		void setUniformi(std::string uName, int v);
 		void setUniformf(std::string uName, float v);
-		void setUniform(std::string uName, Vector3 v);
-		void setUniform(std::string uName, Matrix4 v);
+		void setUniform(std::string uName, Vector3f v);
+		void setUniform(std::string uName, Matrix4f v);
 	private:
 		GLuint program;
 		std::vector<GLuint> activeShaders;

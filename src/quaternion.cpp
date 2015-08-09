@@ -2,7 +2,7 @@
 #include "quaternion.hpp"
 
 namespace DOIT {
-	Quaternion::Quaternion(double _x, double _y, double _z, double _w) {
+	Quaternion::Quaternion(float _x, float _y, float _z, float _w) {
 		x = _x;
 		y = _y;
 		z = _z;
@@ -11,45 +11,45 @@ namespace DOIT {
 
 	Quaternion::~Quaternion() {}
 
-	void Quaternion::setX(double _x) {
+	void Quaternion::setX(float _x) {
 		x = _x;
 	}
 
-	void Quaternion::setY(double _y) {
+	void Quaternion::setY(float _y) {
 		y = _y;
 	}
 
-	void Quaternion::setZ(double _z) {
+	void Quaternion::setZ(float _z) {
 		z = _z;
 	}
 
-	void Quaternion::setW(double _w) {
+	void Quaternion::setW(float _w) {
 		w = _w;
 	}
 
-	double Quaternion::getX() const {
+	float Quaternion::getX() const {
 		return x;
 	}
 
-	double Quaternion::getY() const {
+	float Quaternion::getY() const {
 		return y;
 	}
 
-	double Quaternion::getZ() const {
+	float Quaternion::getZ() const {
 		return z;
 	}
 
-	double Quaternion::getW() const {
+	float Quaternion::getW() const {
 		return w;
 	}
 
-	double Quaternion::mag() {
-		return std::sqrt(x*x + y*y + z*z + w*w);
+	float Quaternion::mag() {
+		return (float)std::sqrt(x*x + y*y + z*z + w*w);
 	}
 
 	Quaternion Quaternion::normalize() {
 		Quaternion res = *this;
-		double m = mag();
+		float m = mag();
 
 		res.x /= m;
 		res.y /= m;
@@ -70,11 +70,11 @@ namespace DOIT {
 				  w*q.w - x*q.x - y*q.y - z*q.z);
 	}
 
-	Quaternion Quaternion::operator*(const Vector3& v) {
+	Quaternion Quaternion::operator*(const Vector3f& v) {
 		return Quaternion(w*v.getX() + y*v.getZ() - z*v.getY(),
 				  w*v.getY() + z*v.getX() - x*v.getZ(),
 				  w*v.getZ() + x*v.getY() - y*v.getX(),
-				  -x*v.getX() - y*v.getY() - z*v.getZ());
+				 -x*v.getX() - y*v.getY() - z*v.getZ());
 	}
 
 	Quaternion& Quaternion::operator=(const Quaternion& q) {
@@ -85,7 +85,7 @@ namespace DOIT {
 		copy(*this * q);
 	}
 
-	Quaternion& Quaternion::operator*=(const Vector3& v) {
+	Quaternion& Quaternion::operator*=(const Vector3f& v) {
 		copy(*this * v);
 	}
 
