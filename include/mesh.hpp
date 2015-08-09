@@ -13,7 +13,6 @@ namespace DOIT {
 		void draw();
 	private:
 		GLuint vao, vbo;
-		int size;
 	};
 }
 

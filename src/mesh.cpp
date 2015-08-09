@@ -14,8 +14,6 @@ namespace DOIT {
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
 		glGenBuffers(1, &vbo);
-
-		size = Vertex::size * sizeof(double);
 	}
 
 	Mesh::~Mesh() {
