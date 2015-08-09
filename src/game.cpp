@@ -1,3 +1,4 @@
+#include <cmath>
 #include "game.hpp"
 #include "mesh.hpp"
 #include "resourceloader.hpp"
@@ -25,6 +26,8 @@ namespace DOIT {
 			testShader->addVertexShader(ResourceLoader::loadShader("basicVertex.vs"));
 			testShader->addFragmentShader(ResourceLoader::loadShader("basicFragment.fs"));
 			testShader->compileShader();
+
+			testShader->addUniform("maxClamp");
 		}
 
 		void cleanUp() {
@@ -34,6 +37,10 @@ namespace DOIT {
 
 		void update() {
 			Input::update();
+
+			static float temp = 0.0;
+			temp += Time::getDelta() / 100;
+			testShader->setUniformf("maxClamp", (float)std::abs(std::sin(temp)));
 		}
 
 		void render() {

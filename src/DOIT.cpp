@@ -84,8 +84,9 @@ namespace DOIT {
 				//TODO: Revamp framerate system.
 				startTime = Time::getTime();
 				passedTime = startTime - lastTime;
+				Time::setDelta((double)passedTime / (double)Time::second);
 				lastTime = startTime;
-				unprocessedTime += passedTime / (double)Time::second;
+				unprocessedTime += (double)passedTime / (double)Time::second;
 				frameCnt += passedTime;
 
 				while (unprocessedTime > frameTime) {
