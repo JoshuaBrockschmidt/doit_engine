@@ -1,3 +1,4 @@
+#include <array>
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/glu.h>
@@ -77,6 +78,45 @@ namespace DOIT {
 
 	void Shader::bind() {
 		glUseProgram(program);
+	}
+
+	void Shader::addUniform(std::string uName) {
+		GLint uniLocation = glGetUniformLocation(program, (const GLchar*)uName.c_str());
+
+		if (uniLocation == -1) {
+			std::string m = "Could not find uniform: ";
+			m += uName;
+			throw ShaderError(m);
+		}
+
+		uniforms.insert(std::pair<std::string, GLint>(uName, uniLocation));
+	}
+
+	void Shader::setUniformi(std::string uName, int v) {
+		glUniform1i(uniforms[uName], v);
+	}
+
+	void Shader::setUniformf(std::string uName, float v) {
+		glUniform1f(uniforms[uName], v);
+	}
+
+	void Shader::setUniform(std::string uName, Vector3 v) {
+		glUniform3f(uniforms[uName],
+			    (GLfloat)v.getX(),
+			    (GLfloat)v.getY(),
+			    (GLfloat)v.getZ() );
+	}
+
+	void Shader::setUniform(std::string uName, Matrix4 v) {
+		std::array<std::array<double, 4>, 4> m = v.getM();
+		GLfloat mf[4][4];
+		for (int i=0; i<4; i++)
+			for (int k=0; k<4; k++)
+				mf[i][k] = (GLfloat)m[i][k];
+		glUniformMatrix4fv(uniforms[uName],
+				   1,
+				   GL_FALSE, //TODO: Should I transpose?
+				   (const GLfloat*) mf );
 	}
 
 	void Shader::addProgram(std::string data, GLenum type) {

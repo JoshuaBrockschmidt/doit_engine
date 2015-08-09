@@ -1,8 +1,11 @@
 #ifndef SHADER_H
 #define SHADER_H
 
+#include <map>
 #include <vector>
 #include <GL/gl.h>
+#include "matrix4.hpp"
+#include "vector3.hpp"
 
 namespace DOIT {
 	class ShaderError: public std::exception {
@@ -24,9 +27,15 @@ namespace DOIT {
 		void addFragmentShader(std::string data);
 		void compileShader();
 		void bind();
+		void addUniform(std::string uName);
+		void setUniformi(std::string uName, int v);
+		void setUniformf(std::string uName, float v);
+		void setUniform(std::string uName, Vector3 v);
+		void setUniform(std::string uName, Matrix4 v);
 	private:
 		GLuint program;
 		std::vector<GLuint> activeShaders;
+		std::map <std::string, GLint> uniforms;
 
 		void addProgram(std::string data, GLenum type);
 	};
