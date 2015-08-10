@@ -2,19 +2,13 @@
 
 namespace DOIT {
 	namespace Time {
+		// Second-per-milliseconds
+		const double second = 1000;
+
 		double delta = 0;
 
-		Uint32 getTime() {
-			//TODO: Consider using nano seconds instead.
-			return SDL_GetTicks();
-		}
-
-		double getDelta() {
-			return delta;
-		}
-
-		void setDelta(double d) {
-			delta = d;
+		double getTime() {
+			return (double)SDL_GetTicks() / second;
 		}
 	}
 }

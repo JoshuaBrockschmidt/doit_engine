@@ -37,7 +37,7 @@ namespace DOIT {
 
 	        void init(unsigned int w, unsigned int h, std::string _title, double _frameCap);
 		void cleanUp();
-		void update();
+		void update(double dt);
 		void render();
 		void run();
 		void start();

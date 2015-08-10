@@ -35,11 +35,11 @@ namespace DOIT {
 			delete testShader;
 		}
 
-		void update() {
+		void update(double dt) {
 			Input::update();
 
 			static float temp = 0.0;
-			temp += Time::getDelta() / 100;
+			temp += (float)dt;
 			testShader->setUniformf("maxClamp", (float)std::abs(std::sin(temp)));
 		}
 

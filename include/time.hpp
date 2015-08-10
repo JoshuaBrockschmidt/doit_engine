@@ -5,13 +5,13 @@
 
 namespace DOIT {
 	namespace Time {
-		// Second-per-milliseconds
-		const Uint32 second = 1000;
 		extern double delta;
 
-		Uint32 getTime();
-		double getDelta();
-		void setDelta(double d);
+		/* Returns the current time.
+		 *
+		 * @return Time in seconds.
+		 */
+		double getTime();
 	}
 }
 

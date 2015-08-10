@@ -7,7 +7,7 @@ namespace DOIT {
 	namespace Game {
 		void init();
 		void cleanUp();
-		void update();
+		void update(double dt);
 		void render();
 	}
 }

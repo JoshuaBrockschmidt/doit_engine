@@ -48,7 +48,7 @@ namespace DOIT {
 			frameCap = newFrameCap;
 		}
 
-		void update() {
+		void update(double dt) {
 			SDL_Event ev;
 			while (SDL_PollEvent(&ev)) {
 				if (ev.type == SDL_WINDOWEVENT &&
@@ -60,7 +60,7 @@ namespace DOIT {
 				}
 			}
 
-			Game::update();
+			Game::update(dt);
 		}
 
 		void render() {
@@ -72,40 +72,36 @@ namespace DOIT {
 		void run() {
 			running = true;
 
-			int frames = 0;
-			Uint32 frameCnt = 0;
-
-			const double frameTime = 1.0 / frameCap;
-			Uint32 startTime, passedTime, lastTime;
-			double unprocessedTime = 0;
+			static const double minFrameTime = 1.0 / frameCap;
+			double startTime, lastTime, dt, frameTimer;
 			lastTime = Time::getTime();
+			frameTimer = 0;
 
-			while(running) {
-				//TODO: Revamp framerate system.
+			double frameCnt, FPStimer; //DEBUG
+
+			while (true) {
 				startTime = Time::getTime();
-				passedTime = startTime - lastTime;
-				Time::setDelta((double)passedTime / (double)Time::second);
+				dt = startTime - lastTime;
 				lastTime = startTime;
-				unprocessedTime += (double)passedTime / (double)Time::second;
-				frameCnt += passedTime;
 
-				while (unprocessedTime > frameTime) {
-					unprocessedTime -= frameTime;
+				update(dt);
+				if (!running) break;
 
-					update();
-					if (!running) break;
-
-					if (frameCnt >= Time::second) {
-						//DEBUG
-						std::cout << "FPS: " << frames << std::endl;
-						//EOF DEBUG
-						frames = 0;
-						frameCnt = 0;
-					}
-
+				frameTimer += dt;
+				if (frameTimer >= minFrameTime) {
 					render();
-					frames++;
+					frameTimer = 0;
+					frameCnt++; //DEBUG
 				}
+
+				//DEBUG
+				FPStimer += dt;
+				if (FPStimer >= 1) {
+					std::cout << "FPS: " << frameCnt << std::endl;
+					FPStimer = 0;
+					frameCnt = 0;
+				}
+				//EOF DEBUG
 			}
 		}
 	}
