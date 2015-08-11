@@ -41,6 +41,11 @@ namespace DOIT {
 		 */
 		void initIdentity();
 
+		/* Used by DOIT::Transform::getTransformation for the sake of
+		 * convenience.
+		 */
+		void initTranslation(float x, float y, float z);
+
 		/* Returns a string representation of a matrix.
 		 */
 		std::string to_string();

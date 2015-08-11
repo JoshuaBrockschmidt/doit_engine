@@ -25,6 +25,7 @@ namespace DOIT {
 #include "renderutil.hpp"
 #include "resourceloader.hpp"
 #include "shader.hpp"
+#include "transform.hpp"
 #include "vector2f.hpp"
 #include "vector3f.hpp"
 #include "vertex.hpp"
