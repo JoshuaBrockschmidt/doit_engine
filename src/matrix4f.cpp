@@ -81,6 +81,13 @@ namespace DOIT {
 		copy(rz * (ry * rx));
 	}
 
+	void Matrix4f::initScale(float x, float y, float z) {
+		m = {{{x, 0, 0, 0},
+		      {0, y, 0, 0},
+		      {0, 0, z, 0},
+		      {0, 0, 0, 1}}};
+	}
+
 	std::string Matrix4f::to_string() {
 		//TODO
 		return std::string();

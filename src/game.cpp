@@ -46,16 +46,17 @@ namespace DOIT {
 			while (temp >= tau) {
 				temp -= tau;
 			}
-			float rot = temp/2 - (float)M_PI;
-			testTrans1.setTranslation((float)std::sin(temp)*0.5f,
-						  (float)std::cos(temp)*0.5f,
+			float sinTemp = (float)std::sin(temp);
+			float cosTemp = (float)std::cos(temp);
+			testTrans1.setTranslation(sinTemp*0.5f,
+						  cosTemp*0.5f,
 						  0 );
-			testTrans1.setRotation(std::cos(temp), std::sin(temp), std::cos(temp));
-			testTrans2.setTranslation((float)std::sin(-temp)*0.5f,
-						  (float)std::sin(-temp)*0.5f,
-						  0 );
+			testTrans1.setRotation(0, 0, sinTemp);
 
-			testTrans2.setRotation(std::sin(temp), std::cos(temp), std::sin(temp));
+			testTrans2.setTranslation(cosTemp*0.5f,
+						  sinTemp*0.5f,
+						  sinTemp );
+			testTrans2.setScale(sinTemp, sinTemp, sinTemp);
 		}
 
 		void render() {

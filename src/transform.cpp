@@ -3,7 +3,8 @@
 namespace DOIT {
 	Transform::Transform():
 		translation(0.0f, 0.0f, 0.0f),
-		rotation(0.0f, 0.0f, 0.0f) {}
+		rotation(0.0f, 0.0f, 0.0f),
+		scale(1.0f, 1.0f, 1.0f) {}
 
 	Transform::~Transform() {}
 
@@ -23,12 +24,24 @@ namespace DOIT {
 	        rotation = Vector3f(x, y, z);
 	}
 
+	void Transform::setScale(Vector3f set) {
+		scale = set;
+	}
+
+	void Transform::setScale(float x, float y, float z) {
+	        scale = Vector3f(x, y, z);
+	}
+
 	Vector3f Transform::getTranslation() {
 		return translation;
 	}
 
 	Vector3f Transform::getRotation() {
 		return rotation;
+	}
+
+	Vector3f Transform::getScale() {
+		return scale;
 	}
 
 	Matrix4f Transform::getTransformation() {
@@ -40,7 +53,11 @@ namespace DOIT {
 		rotMat.initRotation(rotation.getX(),
 				    rotation.getY(),
 				    rotation.getZ() );
+		Matrix4f scaleMat = Matrix4f();
+		scaleMat.initScale(scale.getX(),
+				   scale.getY(),
+				   scale.getZ() );
 
-		return (transMat * rotMat);
+		return (transMat * (rotMat * scaleMat));
 	}
 }

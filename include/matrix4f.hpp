@@ -58,6 +58,14 @@ namespace DOIT {
 		 */
 		void initRotation(float x, float y, float z);
 
+		/* Used by DOIT::Transform for the sake of convenience.
+		 *
+		 * @param x Scaling on x axis.
+		 * @param y Scaling on y axis.
+		 * @param z Scaling on z axis.
+		 */
+		void initScale(float x, float y, float z);
+
 		/* Returns a string representation of a matrix.
 		 */
 		std::string to_string();
