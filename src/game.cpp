@@ -20,13 +20,13 @@ namespace DOIT {
 			testMesh = new Mesh();
 			testShader = new Shader();
 
-			Vertex data[] = {
+			std::vector<Vertex> data = {
 				Vertex(Vector3f(-0.5f, -0.5f,  0.0f)),
 				Vertex(Vector3f( 0.0f,  0.5f,  0.0f)),
 				Vertex(Vector3f( 0.5f, -0.5f,  0.0f))
 			};
 
-		        testMesh->addVertices(data, 3);
+		        testMesh->addVertices(data);
 			testShader->addVertexShader(ResourceLoader::loadShader("basicVertex.vs"));
 			testShader->addFragmentShader(ResourceLoader::loadShader("basicFragment.fs"));
 			testShader->compileShader();

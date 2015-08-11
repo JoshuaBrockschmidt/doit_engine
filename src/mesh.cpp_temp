@@ -14,6 +14,7 @@ namespace DOIT {
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
 		glGenBuffers(1, &vbo);
+		glGenBuffers(1, &ibo);
 	}
 
 	Mesh::~Mesh() {
@@ -36,6 +37,14 @@ namespace DOIT {
 			     sizeof(buffer),
 			     buffer,
 			     GL_STATIC_DRAW );
+
+		/*
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+		glBufferData(GL_ARRAY_BUFFER,
+			     sizeof(buffer),
+			     buffer,
+			     GL_STATIC_DRAW );
+		*/
 	}
 
 	void Mesh::draw() {

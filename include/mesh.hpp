@@ -1,6 +1,7 @@
 #ifndef MESH_H
 #define MESH_H
 
+#include <vector>
 #include <GL/gl.h>
 #include "vertex.hpp"
 
@@ -9,7 +10,7 @@ namespace DOIT {
 	public:
 		Mesh();
 		~Mesh();
-		void addVertices(Vertex vertices[], unsigned int len);
+		void addVertices(std::vector<Vertex> vertices);
 		void draw();
 	private:
 		GLuint vao, vbo;
