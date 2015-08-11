@@ -10,10 +10,11 @@ namespace DOIT {
 	public:
 		Mesh();
 		~Mesh();
-		void addVertices(std::vector<Vertex> vertices);
+		void addVertices(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
 		void draw();
 	private:
-		GLuint vao, vbo;
+		GLuint vao, vbo, ibo;
+		int size;
 	};
 }
 

@@ -20,13 +20,21 @@ namespace DOIT {
 			testMesh = new Mesh();
 			testShader = new Shader();
 
-			std::vector<Vertex> data = {
+			std::vector<Vertex> verts = {
 				Vertex(Vector3f(-0.5f, -0.5f,  0.0f)),
 				Vertex(Vector3f( 0.0f,  0.5f,  0.0f)),
-				Vertex(Vector3f( 0.5f, -0.5f,  0.0f))
+				Vertex(Vector3f( 0.5f, -0.5f,  0.0f)),
+				Vertex(Vector3f( 0.0f, -0.5f,  0.5f)),
 			};
 
-		        testMesh->addVertices(data);
+			std::vector<unsigned int> indices = {
+				0, 1, 3,
+				3, 1, 2,
+				2, 1, 0,
+				0, 2, 3
+			};
+
+		        testMesh->addVertices(verts, indices);
 			testShader->addVertexShader(ResourceLoader::loadShader("basicVertex.vs"));
 			testShader->addFragmentShader(ResourceLoader::loadShader("basicFragment.fs"));
 			testShader->compileShader();
@@ -48,10 +56,7 @@ namespace DOIT {
 			}
 			float sinTemp = (float)std::sin(temp);
 			float cosTemp = (float)std::cos(temp);
-			testTrans1.setTranslation(sinTemp*0.5f,
-						  cosTemp*0.5f,
-						  0 );
-			testTrans1.setRotation(0, 0, sinTemp);
+			testTrans1.setRotation((float)M_PI/4, temp, 0);
 
 			testTrans2.setTranslation(cosTemp*0.5f,
 						  sinTemp*0.5f,
