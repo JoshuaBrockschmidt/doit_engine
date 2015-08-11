@@ -9,6 +9,7 @@ namespace DOIT {
 	public:
 		Matrix4f();
 		Matrix4f(const Matrix4f& mat);
+		Matrix4f(const std::array<std::array<float, 4>, 4>& _m);
 		~Matrix4f();
 
 		/* Sets the values of a matrix.
@@ -41,10 +42,21 @@ namespace DOIT {
 		 */
 		void initIdentity();
 
-		/* Used by DOIT::Transform::getTransformation for the sake of
-		 * convenience.
+		/* Used by DOIT::Transform for the sake of convenience
+		 *
+		 * @param x Translation on x axis.
+		 * @param y Translation on y axis.
+		 * @param z Translation on z axis.
 		 */
 		void initTranslation(float x, float y, float z);
+
+		/* Used by DOIT::Transform for the sake of convenience.
+		 *
+		 * @param x Rotation on x axis in radians.
+		 * @param y Rotation on y axis in radians.
+		 * @param z Rotation on z axis in radians.
+		 */
+		void initRotation(float x, float y, float z);
 
 		/* Returns a string representation of a matrix.
 		 */

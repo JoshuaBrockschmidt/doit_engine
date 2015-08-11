@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 #include "matrix4f.hpp"
 
@@ -10,6 +11,10 @@ namespace DOIT {
 
 	Matrix4f::Matrix4f(const Matrix4f& mat) {
 		copy(mat);
+	}
+
+	Matrix4f::Matrix4f(const std::array<std::array<float, 4>, 4>& _m) {
+		m = _m;
 	}
 
 	Matrix4f::~Matrix4f() {}
@@ -51,6 +56,29 @@ namespace DOIT {
 		m[1][0] = 0; m[1][1] = 1; m[1][2] = 0; m[1][3] = y;
 		m[2][0] = 0; m[2][1] = 0; m[2][2] = 1; m[2][3] = z;
 		m[3][0] = 0; m[3][1] = 0; m[3][2] = 0; m[3][3] = 1;
+	}
+
+	void Matrix4f::initRotation(float x, float y, float z) {
+		std::array<std::array<float, 4>, 4> _m =
+			{{{1,  0,                   0,                 0},
+			  {0, (float)std::cos(x), -(float)std::sin(x), 0},
+			  {0, (float)std::sin(x),  (float)std::cos(x), 0},
+			  {0,  0,                   0,                 1}}};
+		Matrix4f rx = Matrix4f(_m);
+
+		_m = {{{(float)std::cos(y), 0, -(float)std::sin(y), 0},
+		       { 0,                 1,  0,                  0},
+		       {(float)std::sin(y), 0,  (float)std::cos(y), 0},
+		       { 0,                 0,   0,                 1}}};
+		Matrix4f ry = Matrix4f(_m);
+
+	        _m = {{{(float)std::cos(z), -(float)std::sin(z), 0, 0},
+		       {(float)std::sin(z),  (float)std::cos(z), 0, 0},
+		       { 0,                  0,                  1, 0},
+		       { 0,                  0,                  0, 1}}};
+		Matrix4f rz = Matrix4f(_m);
+
+		copy(rz * (ry * rx));
 	}
 
 	std::string Matrix4f::to_string() {
@@ -148,10 +176,6 @@ namespace DOIT {
 		  {0, 1, 0, 0},
 		  {0, 0, 1, 0},
 		  {0, 0, 0, 1}}};
-
-	static std::array<std::array<float, 4>, 4> translation =
-		{{{
-				}}};
 
 	void Matrix4f::copy(const Matrix4f& mat) {
 		m = mat.m;

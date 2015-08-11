@@ -13,7 +13,7 @@ namespace DOIT {
 	namespace Game {
 		Mesh* testMesh;
 		Shader* testShader;
-		Transform testTrans;
+		Transform testTrans1, testTrans2;
 		float temp, tau = 2*M_PI;
 
 		void init() {
@@ -46,16 +46,25 @@ namespace DOIT {
 			while (temp >= tau) {
 				temp -= tau;
 			}
-			testTrans.setTranslation((float)std::sin(temp)*0.5f,
-						 (float)std::cos(temp)*0.5f,
-						 0 );
+			float rot = temp/2 - (float)M_PI;
+			testTrans1.setTranslation((float)std::sin(temp)*0.5f,
+						  (float)std::cos(temp)*0.5f,
+						  0 );
+			testTrans1.setRotation(std::cos(temp), std::sin(temp), std::cos(temp));
+			testTrans2.setTranslation((float)std::sin(-temp)*0.5f,
+						  (float)std::sin(-temp)*0.5f,
+						  0 );
+
+			testTrans2.setRotation(std::sin(temp), std::cos(temp), std::sin(temp));
 		}
 
 		void render() {
 			testShader->bind();
 
-			testShader->setUniform("transform", testTrans.getTransformation());
+			testShader->setUniform("transform", testTrans1.getTransformation());
+			testMesh->draw();
 
+			testShader->setUniform("transform", testTrans2.getTransformation());
 			testMesh->draw();
 		}
 	}
