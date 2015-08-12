@@ -4,6 +4,9 @@ namespace DOIT {
 	Vertex::Vertex(Vector3f v):
 		pos(v) {}
 
+	Vertex::Vertex(float x, float y, float z):
+		pos(x, y, z) {}
+
 	Vertex::~Vertex() {};
 
 	void Vertex::setPos(Vector3f v) {

@@ -21,16 +21,16 @@ namespace DOIT {
 			testShader = new Shader();
 
 			std::vector<Vertex> verts = {
-				Vertex(Vector3f(-0.5f, -0.5f,  0.0f)),
-				Vertex(Vector3f( 0.0f,  0.5f,  0.0f)),
-				Vertex(Vector3f( 0.5f, -0.5f,  0.0f)),
-				Vertex(Vector3f( 0.0f, -0.5f,  0.5f)),
+				Vertex(-0.5f, -0.5f,  0.0f),
+				Vertex( 0.0f,  0.5f,  0.0f),
+				Vertex( 0.5f, -0.5f,  0.0f),
+				Vertex( 0.0f, -0.5f,  0.5f)
 			};
 
 			std::vector<unsigned int> indices = {
-				0, 1, 3,
-				3, 1, 2,
-				2, 1, 0,
+				3, 1, 0,
+				2, 1, 3,
+				0, 1, 2,
 				0, 2, 3
 			};
 
@@ -56,7 +56,7 @@ namespace DOIT {
 			}
 			float sinTemp = (float)std::sin(temp);
 			float cosTemp = (float)std::cos(temp);
-			testTrans1.setRotation((float)M_PI/4, temp, 0);
+			testTrans1.setRotation(temp, temp, temp);
 
 			testTrans2.setTranslation(cosTemp*0.5f,
 						  sinTemp*0.5f,

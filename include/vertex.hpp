@@ -9,6 +9,7 @@ namespace DOIT {
 		static const int size = 3;
 
 		Vertex(Vector3f v);
+		Vertex(float x, float y, float z);
 		~Vertex();
 		void setPos(Vector3f v);
 		Vector3f getPos();
