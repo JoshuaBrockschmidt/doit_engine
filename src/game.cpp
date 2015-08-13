@@ -11,35 +11,22 @@
 
 namespace DOIT {
 	namespace Game {
-		Mesh* testMesh;
+		Mesh *testMesh;
 		Shader* testShader;
-		Transform testTrans1, testTrans2;
+		Transform testTrans;
 		float temp, tau = 2*M_PI;
 
 		void init() {
-			testMesh = new Mesh();
+			testMesh = ResourceLoader::loadMesh("cube.obj");
 			testShader = new Shader();
 
-			std::vector<Vertex> verts = {
-				Vertex(-0.5f, -0.5f,  0.0f),
-				Vertex( 0.0f,  0.5f,  0.0f),
-				Vertex( 0.5f, -0.5f,  0.0f),
-				Vertex( 0.0f, -0.5f,  0.5f)
-			};
-
-			std::vector<unsigned int> indices = {
-				3, 1, 0,
-				2, 1, 3,
-				0, 1, 2,
-				0, 2, 3
-			};
-
-		        testMesh->addVertices(verts, indices);
 			testShader->addVertexShader(ResourceLoader::loadShader("basicVertex.vs"));
 			testShader->addFragmentShader(ResourceLoader::loadShader("basicFragment.fs"));
 			testShader->compileShader();
 
 			testShader->addUniform("transform");
+
+			testTrans.setScale(0.5f, 0.5f, 0.5f);
 		}
 
 		void cleanUp() {
@@ -54,23 +41,13 @@ namespace DOIT {
 			while (temp >= tau) {
 				temp -= tau;
 			}
-			float sinTemp = (float)std::sin(temp);
-			float cosTemp = (float)std::cos(temp);
-			testTrans1.setRotation(temp, temp, temp);
-
-			testTrans2.setTranslation(cosTemp*0.5f,
-						  sinTemp*0.5f,
-						  sinTemp );
-			testTrans2.setScale(sinTemp, sinTemp, sinTemp);
+			testTrans.setRotation(-temp, -temp, -temp);
 		}
 
 		void render() {
 			testShader->bind();
 
-			testShader->setUniform("transform", testTrans1.getTransformation());
-			testMesh->draw();
-
-			testShader->setUniform("transform", testTrans2.getTransformation());
+			testShader->setUniform("transform", testTrans.getTransformation());
 			testMesh->draw();
 		}
 	}
