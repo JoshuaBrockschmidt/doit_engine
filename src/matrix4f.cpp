@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>
 #include "matrix4f.hpp"
@@ -86,6 +87,17 @@ namespace DOIT {
 		      {0, y, 0, 0},
 		      {0, 0, z, 0},
 		      {0, 0, 0, 1}}};
+	}
+
+	void Matrix4f::initProjection(float fov, float w, float h, float zNear, float zFar) {
+		float ar = w/h; //Aspect ratio
+		float tanHalfFOV = (float)std::tan((double)fov*M_PI/360);
+		float zRange = zNear-zFar;
+
+		m = {{{1 / (tanHalfFOV*ar), 0,              0,                    0},
+		      {0,                   1 / tanHalfFOV, 0,                    0},
+		      {0,                   0,              (-zNear-zFar)/zRange, 2*zFar*zNear/zRange},
+		      {0,                   0,              1,                    0}}};
 	}
 
 	std::string Matrix4f::to_string() {

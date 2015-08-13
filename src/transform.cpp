@@ -1,12 +1,26 @@
 #include "transform.hpp"
 
 namespace DOIT {
+	float Transform::fov = 0.0f;
+	float Transform::width = 0.0f;
+	float Transform::height = 0.0f;
+	float Transform::zNear = 0.0f;
+	float Transform::zFar = 0.0f;
+
 	Transform::Transform():
 		translation(0.0f, 0.0f, 0.0f),
 		rotation(0.0f, 0.0f, 0.0f),
 		scale(1.0f, 1.0f, 1.0f) {}
 
 	Transform::~Transform() {}
+
+	void Transform::setProjection(float _fov, float w, float h, float _zNear, float _zFar) {
+		Transform::fov = _fov;
+		Transform::width = w;
+		Transform::height = h;
+		Transform::zNear = _zNear;
+		Transform::zFar = _zFar;
+	}
 
 	void Transform::setTranslation(Vector3f set) {
 		translation = set;
@@ -30,6 +44,18 @@ namespace DOIT {
 
 	void Transform::setScale(float x, float y, float z) {
 	        scale = Vector3f(x, y, z);
+	}
+
+	Matrix4f Transform::getProjectedTransformation() {
+		Matrix4f transMat = getTransformation();
+		Matrix4f proMat = Matrix4f();
+		proMat.initProjection(Transform::fov,
+				      Transform::width,
+				      Transform::height,
+				      Transform::zNear,
+				      Transform::zFar );
+
+		return proMat*transMat;
 	}
 
 	Vector3f Transform::getTranslation() {

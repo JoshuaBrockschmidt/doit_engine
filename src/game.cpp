@@ -8,6 +8,7 @@
 #include "transform.hpp"
 #include "vector3f.hpp"
 #include "vertex.hpp"
+#include "window.hpp"
 
 namespace DOIT {
 	namespace Game {
@@ -26,7 +27,12 @@ namespace DOIT {
 
 			testShader->addUniform("transform");
 
-			testTrans.setScale(0.5f, 0.5f, 0.5f);
+			testTrans.setProjection(90.0f,
+						Window::getWidth(),
+						Window::getHeight(),
+						0.1f,
+						1000.0f );
+			testTrans.setTranslation(0.0f, 0.0f, 4.0f);
 		}
 
 		void cleanUp() {
@@ -47,7 +53,7 @@ namespace DOIT {
 		void render() {
 			testShader->bind();
 
-			testShader->setUniform("transform", testTrans.getTransformation());
+			testShader->setUniform("transform", testTrans.getProjectedTransformation());
 			testMesh->draw();
 		}
 	}

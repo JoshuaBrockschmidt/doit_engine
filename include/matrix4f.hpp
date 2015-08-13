@@ -66,6 +66,16 @@ namespace DOIT {
 		 */
 		void initScale(float x, float y, float z);
 
+		/* Used by DOIT::Transform for the sake of convenience.
+		 *
+		 * @param fov Field of view in degrees.
+		 * @param w Width of screen.
+		 * @param h Height of screen.
+		 * @param zNear How close objects can be before clipping.
+		 * @param zFar How far away objects can be before clipping.
+		 */
+		void initProjection(float fov, float w, float h, float zNear, float zFar);
+
 		/* Returns a string representation of a matrix.
 		 */
 		std::string to_string();
