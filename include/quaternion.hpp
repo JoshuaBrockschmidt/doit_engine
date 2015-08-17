@@ -31,9 +31,11 @@ namespace DOIT {
 
 		Quaternion operator*(const Quaternion& q);
 		Quaternion operator*(const Vector3f& v);
+		Quaternion operator*(float v);
 		Quaternion& operator=(const Quaternion& q);
 		Quaternion& operator*=(const Quaternion& q);
 		Quaternion& operator*=(const Vector3f& v);
+		Quaternion& operator*=(float v);
 	private:
 		float x, y, z, w;
 

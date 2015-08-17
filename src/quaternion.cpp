@@ -77,6 +77,10 @@ namespace DOIT {
 				 -x*v.getX() - y*v.getY() - z*v.getZ());
 	}
 
+	Quaternion Quaternion::operator*(float v) {
+		return Quaternion(x*v, y*v, z*v, w*v);
+	}
+
 	Quaternion& Quaternion::operator=(const Quaternion& q) {
 	        copy(q);
 	}
@@ -89,7 +93,9 @@ namespace DOIT {
 		copy(*this * v);
 	}
 
-
+	Quaternion& Quaternion::operator*=(float v) {
+		copy(*this * v);
+	}
 
 	void Quaternion::copy(const Quaternion& q) {
 		x = q.x;
