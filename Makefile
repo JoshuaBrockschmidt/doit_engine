@@ -41,4 +41,4 @@ debug: CPPFLAGS += $(WARNFLAGS) -g
 debug: $(NAME)
 
 clean:
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(OBJS)
