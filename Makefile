@@ -8,7 +8,7 @@ CC=g++
 SOURCES := $(wildcard src/*.cpp)
 
 # object files
-OBJS := $(SOURCES)
+OBJS 	:= $(SOURCES:.cpp=.o)
 
 # Build flags
 INCLUDES    := -Iinclude
