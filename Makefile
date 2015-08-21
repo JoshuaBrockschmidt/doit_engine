@@ -24,20 +24,20 @@ WARNFLAGS   += -Wno-pragmas -Wno-unused-but-set-parameter
 WARNFLAGS   += -Wno-unused-but-set-variable -Wno-unused-result
 WARNFLAGS   += -Wwrite-strings -Wdisabled-optimization -Wpointer-arith
 WARNFLAGS   += -Werror
-CFLAGS      := $(INCLUDES) $(BASEFLAGS)
-CFLAGS      += -std=c++11
+CPPFLAGS      := $(INCLUDES) $(BASEFLAGS)
+CPPFLAGS      += -std=c++11
 LDFLAGS     := -lSDL2 -lGL -lGLU -lGLEW
 
 # build rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
-warn: CFLAGS += $(WARNFLAGS)
+warn: CPPFLAGS += $(WARNFLAGS)
 warn: $(NAME)
 
-debug: CFLAGS += $(WARNFLAGS) -g
+debug: CPPFLAGS += $(WARNFLAGS) -g
 debug: $(NAME)
 
 clean:
