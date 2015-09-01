@@ -1,6 +1,6 @@
-#version 440
+#version 330
 
-layout (location = 0) in vec3 position;
+in vec3 position;
 
 out vec4 color;
 
