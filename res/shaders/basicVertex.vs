@@ -1,4 +1,6 @@
-#version 440
+#version 330
+
+#extension GL_ARB_explicit_attrib_location : require
 
 layout (location = 0) in vec3 position;
 
