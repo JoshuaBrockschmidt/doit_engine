@@ -23,21 +23,21 @@
 
 namespace DOIT {
 	namespace Input {
-		bool keysUp[to_integral(Keys::NUM_ITEMS)];
-		bool keysDown[to_integral(Keys::NUM_ITEMS)];
-		bool keysActive[to_integral(Keys::NUM_ITEMS)];
-		bool mouseUp[to_integral(Mouse::NUM_ITEMS)];
-		bool mouseDown[to_integral(Mouse::NUM_ITEMS)];
-		bool mouseActive[to_integral(Mouse::NUM_ITEMS)];
+		bool keysUp[(unsigned int)Keys::NUM_ITEMS];
+		bool keysDown[(unsigned int)Keys::NUM_ITEMS];
+		bool keysActive[(unsigned int)Keys::NUM_ITEMS];
+		bool mouseUp[(unsigned int)Mouse::NUM_ITEMS];
+		bool mouseDown[(unsigned int)Mouse::NUM_ITEMS];
+		bool mouseActive[(unsigned int)Mouse::NUM_ITEMS];
 		int mouse_x, mouse_y;
 
 		void init() {
-			for (int k=0; k<to_integral(Keys::NUM_ITEMS); k++) {
+			for (int k=0; k<(int)Keys::NUM_ITEMS; k++) {
 				keysDown[k] = false;
 				keysUp[k] = false;
 				keysActive[k] = false;
 			}
-			for (int k=0; k<to_integral(Mouse::NUM_ITEMS); k++) {
+			for (int k=0; k<(unsigned int)Mouse::NUM_ITEMS; k++) {
 				mouseDown[k] = false;
 				mouseUp[k] = false;
 				mouseActive[k] = false;
@@ -51,7 +51,7 @@ namespace DOIT {
 			const Uint8* keystate = SDL_GetKeyboardState(&numkeys);
 			int kSDL, k;
 			for (kSDL=0; kSDL<numkeys; kSDL++) {
-				k = to_integral(SDLtoKey(kSDL));
+				k=(unsigned int)SDLtoKey(kSDL);
 				if (keystate[kSDL]) {
 					if (!keysActive[k]) {
 						keysUp[k] = false;
@@ -72,7 +72,7 @@ namespace DOIT {
 			}
 
 			Uint32 mousestate = SDL_GetMouseState(&mouse_x, &mouse_y);
-			for (k=0; k<to_integral(Mouse::NUM_ITEMS); k++) {
+			for (k=0; k<(unsigned int)Mouse::NUM_ITEMS; k++) {
 				if (mousestate & SDL_BUTTON(k+1)) {
 					if (!mouseActive[k]) {
 						mouseUp[k] = false;
@@ -94,27 +94,27 @@ namespace DOIT {
 		}
 
 		bool getKeyDown(Keys k) {
-			return keysDown[to_integral(k)];
+			return keysDown[(unsigned int)k];
 		}
 
 		bool getKeyUp(Keys k) {
-			return keysUp[to_integral(k)];
+			return keysUp[(unsigned int)k];
 		}
 
 		bool getKey(Keys k) {
-			return keysActive[to_integral(k)];
+			return keysActive[(unsigned int)k];
 		}
 
 		bool getMouseDown(Mouse btn) {
-			return mouseDown[to_integral(btn)];
+			return mouseDown[(unsigned int)btn];
 		}
 
 		bool getMouseUp(Mouse btn) {
-			return mouseUp[to_integral(btn)];
+			return mouseUp[(unsigned int)btn];
 		}
 
 		bool getMouse(Mouse btn) {
-			return mouseActive[to_integral(btn)];
+			return mouseActive[(unsigned int)btn];
 		}
 
 		void getMouseXY(int& x, int& y) {
