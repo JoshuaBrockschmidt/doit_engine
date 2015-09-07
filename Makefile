@@ -36,12 +36,11 @@ WARNFLAGS   += -Wno-div-by-zero -Wno-endif-labels -Wfloat-equal
 WARNFLAGS   += -Wformat=2 -Wno-format-extra-args -Winit-self
 WARNFLAGS   += -Winvalid-pch -Wmissing-format-attribute
 WARNFLAGS   += -Wmissing-include-dirs -Wno-multichar -Wshadow
-WARNFLAGS   += -Wno-sign-compare -Wswitch -Wsystem-headers
+WARNFLAGS   += -Wno-sign-compare -Wswitch
 WARNFLAGS   += -Wno-pragmas -Wno-unused-but-set-parameter
 WARNFLAGS   += -Wno-unused-but-set-variable -Wno-unused-result
 WARNFLAGS   += -Wwrite-strings -Wdisabled-optimization -Wpointer-arith
-WARNFLAGS   += -Werror
-CPPFLAGS      := $(INCLUDES) $(BASEFLAGS)
+CPPFLAGS      := $(INCLUDES) $(BASEFLAGS) $(WARNFLAGS)
 CPPFLAGS      += -std=c++11
 LDFLAGS     := -lSDL2 -lGL -lGLU -lGLEW
 
@@ -51,10 +50,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
-warn: CPPFLAGS += $(WARNFLAGS)
-warn: $(NAME)
-
-debug: CPPFLAGS += $(WARNFLAGS) -g
+debug: CPPFLAGS += -g
 debug: $(NAME)
 
 clean:
